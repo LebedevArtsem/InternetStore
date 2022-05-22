@@ -1,0 +1,108 @@
+﻿@model List<Product>
+
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<div class="super_overlay"></div>
+
+<!-- Home -->
+
+<div class="home">
+    <!-- Home Slider -->
+    <div class="home_slider_container">
+        <div class="owl-carousel owl-theme home_slider">
+
+            @for (int i = 0; i < 3; i++)
+            {
+                <!-- Slide -->
+                @await Html.PartialAsync("_Slide",@Model[i])
+            }
+
+        </div>
+        <div class="home_slider_nav home_slider_nav_prev"><i class="fa fa-chevron-left" aria-hidden="true"></i></div>
+        <div class="home_slider_nav home_slider_nav_next"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
+
+        <!-- Home Slider Dots -->
+
+        <div class="home_slider_dots_container">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="home_slider_dots">
+                            <ul id="home_slider_custom_dots" class="home_slider_custom_dots d-flex flex-row align-items-center justify-content-center">
+                                <li class="home_slider_custom_dot active">01</li>
+                                <li class="home_slider_custom_dot">02</li>
+                                <li class="home_slider_custom_dot">03</li>
+                                <li class="home_slider_custom_dot">04</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Products -->
+
+<div class="products">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="section_title text-center">Popular on Little Closet</div>
+            </div>
+        </div>
+        <div class="row page_nav_row">
+            <div class="col">
+                <div class="page_nav">
+                    <ul class="d-flex flex-row align-items-start justify-content-center">
+                        <li class="active"><a href="category.html">Women</a></li>
+                        <li><a href="category.html">Men</a></li>
+                        <li><a href="category.html">Kids</a></li>
+                        <li><a href="category.html">Home Deco</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row products_row">
+
+            @foreach (var item in Model)
+            {
+                <!-- Product -->
+                <div class="col-xl-4 col-md-6">
+                @await Html.PartialAsync("_Product",item)
+                </div>
+            }
+
+        </div>
+        <div class="row load_more_row">
+            <div class="col">
+                <div class="button load_more ml-auto mr-auto"><a href="#">load more</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Boxes -->
+
+<div class="boxes">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="boxes_container d-flex flex-row align-items-start justify-content-between flex-wrap">
+
+                    @for (int i = 0; i < 3; i++)
+                    {
+                        <!-- Box -->
+                        @await Html.PartialAsync("_Box")
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
