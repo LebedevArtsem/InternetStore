@@ -1,0 +1,53 @@
+﻿@model SignUpUser
+
+@section Links{
+    <link rel="stylesheet" type="text/css" href="~/css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="~/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="~/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+    <link rel="stylesheet" type="text/css" href="~/plugins/OwlCarousel2-2.2.1/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/css/main_styles.css">
+    <link rel="stylesheet" type="text/css" href="~/css/responsive.css">
+    <link rel="stylesheet" type="text/css" href="~/css/my.css">
+    <link rel="stylesheet" type="text/css" href="~/css/registrate/style.css">
+}
+
+    <div class="home">
+        @using (Html.BeginForm("SignUp", "UserAccount", FormMethod.Post))
+    {
+        <label>Sign Up</label>
+        <div>
+            <div id="arrow"></div>
+
+            <input asp-for="Email" placeholder="Email" type="text">
+            <span asp-validation-for="Email" class="alert-danger"></span>
+
+            <input asp-for="Password" placeholder="Password" type="password">
+            <span asp-validation-for="Password" class="alert-danger"></span>
+
+            <input asp-for="PasswordConfirm" placeholder="Confirm password" type="password">
+            <span asp-validation-for="PasswordConfirm" class="alert-danger"></span>
+        </div>
+        <button type="submit">
+            Sign Up
+        </button>
+    }
+</div>
+
+<script type="text/javascript"></script>
+
+@section Scripts{
+    <script src="~/js/jquery-3.2.1.min.js"></script>
+    <script src="~/css/bootstrap/popper.js"></script>
+    <script src="~/css/bootstrap/bootstrap.min.js"></script>
+    <script src="~/plugins/greensock/TweenMax.min.js"></script>
+    <script src="~/plugins/greensock/TimelineMax.min.js"></script>
+    <script src="~/plugins/scrollmagic/ScrollMagic.min.js"></script>
+    <script src="~/plugins/greensock/animation.gsap.min.js"></script>
+    <script src="~/plugins/greensock/ScrollToPlugin.min.js"></script>
+    <script src="~/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+    <script src="~/plugins/easing/easing.js"></script>
+    <script src="~/plugins/progressbar/progressbar.min.js"></script>
+    <script src="~/plugins/parallax-js-master/parallax.min.js"></script>
+    <script src="~/js/custom.js"></script>
+}

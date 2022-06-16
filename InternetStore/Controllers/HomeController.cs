@@ -17,121 +17,37 @@ namespace InternetStore.Controllers
 
         private readonly IMongoDatabase _mongoDatabase;
 
+        private readonly IMongoCollection<Product> _products;
+
         public HomeController(ILogger<HomeController> logger, IMongoDatabase mongoDatabase)
         {
             _logger = logger;
-            this._mongoDatabase = mongoDatabase;
+            _mongoDatabase = mongoDatabase;
+            _products = _mongoDatabase.GetCollection<Product>("Products");
         }
 
         public IActionResult Index()
         {
-            var collection = _mongoDatabase.GetCollection<Product>("Products");
-            var list = collection.Find(new BsonDocument()).ToList();
-
-            {
-                //var product = new Product[] {
-                //    new Product() {
-                //        Image = "/Images/product_1.jpg",
-                //        Category = new Category() { Title = "Женское" },
-                //        Price = 10,
-                //        Rate = 4,
-                //        Title = "Jacket",
-                //        Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                //        Size = "M",
-                //        Id = Guid.NewGuid().ToString()
-                //    },
-                //    new Product() {
-                //        Image = "/Images/product_2.jpg",
-                //        Category = new Category() { Title = "Женское" },
-                //        Price = 8,
-                //        Rate = 3,
-                //        Title = "Coat",
-                //        Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                //        Size = "M",
-                //        Id = Guid.NewGuid().ToString()
-                //    },
-                //    new Product() {
-                //        Image = "/Images/product_3.jpg",
-                //        Category = new Category() { Title = "Женское" },
-                //        Price = 11,
-                //        Rate = 3,
-                //        Title = "Suit",
-                //        Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                //        Size = "XS",
-                //        Id = Guid.NewGuid().ToString()
-                //    },
-                //    new Product() {
-                //        Image = "/Images/product_4.jpg",
-                //        Category = new Category() { Title = "Женское" },
-                //        Price = 5,
-                //        Rate = 2,
-                //        Title = "Blouse",
-                //        Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                //        Size = "M",
-                //        Id = Guid.NewGuid().ToString()
-                //    },
-                //    new Product() {
-                //        Image = "/Images/product_5.jpg",
-                //        Category = new Category() { Title = "Женское" },
-                //        Price = 7,
-                //        Rate = 4,
-                //        Title = "Jacket",
-                //        Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                //        Size = "L",
-                //        Id = Guid.NewGuid().ToString()
-                //    },
-                //    new Product() {
-                //        Image = "/Images/product_6.jpg",
-                //        Category = new Category() { Title = "Женское" },
-                //        Price = 10,
-                //        Rate = 4,
-                //        Title = "Suit",
-                //        Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                //        Size = "M",
-                //        Id = Guid.NewGuid().ToString()
-                //    },
-                //    new Product() {
-                //        Image = "/Images/product_7.jpg",
-                //        Category = new Category() { Title = "Женское" },
-                //        Price = 10,
-                //        Rate = 5,
-                //        Title = "Suit",
-                //        Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                //        Size = "S",
-                //        Id = Guid.NewGuid().ToString()
-                //    },
-                //    new Product() {
-                //        Image = "/Images/product_8.jpg",
-                //        Category = new Category() { Title = "Женское" },
-                //        Price = 6,
-                //        Rate = 3,
-                //        Title = "Jacket",
-                //        Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                //        Size = "M",
-                //        Id = Guid.NewGuid().ToString()
-                //    },
-                //    new Product() {
-                //        Image = "/Images/product_9.jpg",
-                //        Category = new Category() { Title = "Женское" },
-                //        Price = 10,
-                //        Rate = 4,
-                //        Title = "Suit",
-                //        Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                //        Size = "S",
-                //        Id = Guid.NewGuid().ToString()
-                //    },
-                //};
-
-                //collection.InsertMany(product);
-            }
+            var list = _products.Find(Product => true).ToList();
+            
 
             return View(list);
         }
 
-        public IActionResult Registration()
+        public IActionResult Product(string id)
         {
-            return View();
+            var product = _products.Find(product => product.Id == id);
+
+            return View(product);
         }
+
+        public IActionResult Category()
+        {
+            var collection = _mongoDatabase.GetCollection<Product>("Products");
+            var list = collection.Find(new BsonDocument()).ToList();
+            return View(list);
+        }
+
 
         public IActionResult Privacy()
         {

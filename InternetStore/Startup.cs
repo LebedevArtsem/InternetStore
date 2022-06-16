@@ -23,7 +23,7 @@ namespace InternetStore
 
         public void ConfigureServices(IServiceCollection services)
         {
-            
+
             services.AddControllersWithViews();
             services.AddSingleton(provider => new MongoClient(_appsettings.Database.ConnectionString)
             .GetDatabase(_appsettings.Database.DatabaseName));
@@ -51,11 +51,23 @@ namespace InternetStore
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}"                   
+                    pattern: "{controller=Home}/{action=Index}/"
                     );
                 endpoints.MapControllerRoute(
-                    name : "default",
-                    pattern : "{controller=Home}/{action=Registration}"
+                    name: "default",
+                    pattern: "{controller=UserAccount}/{action=SignUp}"
+                    );
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=UserAccount}/{action=SignIn}"
+                    );
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Category}/{id?}"
+                    );
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Product}/{id?}"
                     );
             });
         }
