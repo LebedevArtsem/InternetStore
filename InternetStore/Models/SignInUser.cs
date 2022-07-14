@@ -1,28 +1,36 @@
 ﻿
+using FluentValidation;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace InternetStore.Models
+namespace InternetStore.Models;
+public class SignInUser
 {
-    public class SignInUser
+    public string Id { get; set; }
+
+    public string Email { get; set; }
+
+    public string Password { get; set; }
+
+    public SignInUser()
     {
-        public string Id { get; set; }
 
-        [Required(ErrorMessage = "Enter a email")]
-        public string Email { get; set; }
+    }
 
-        [Required(ErrorMessage = "Enter a password")]
-        public string Password { get; set; }
-
-        public SignInUser()
-        {
-
-        }
-
-        public SignInUser(string email,string password)
-        {
-            Email = email;
-            Password = password;
-        }
+    public SignInUser(string email, string password)
+    {
+        Email = email;
+        Password = password;
     }
 }
+
+public class SignInUserValidation : AbstractValidator<SignInUser>
+{
+    public SignInUserValidation()
+    {
+        RuleFor(x => x.Email).NotEmpty().WithMessage("Enter a login");
+        RuleFor(x => x.Email).EmailAddress().WithMessage("Wrong login");
+        RuleFor(x => x.Password).NotEmpty().WithMessage("Enter a password");
+    }
+}
+

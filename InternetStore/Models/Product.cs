@@ -28,5 +28,10 @@ namespace InternetStore.Models
 
         public User User { get; set; }
 
+        public Product()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
+
     }
 }

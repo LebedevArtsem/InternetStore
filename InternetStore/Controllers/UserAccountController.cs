@@ -1,69 +1,77 @@
 ﻿using InternetStore.Models;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
+using System.Threading.Tasks;
 
-namespace InternetStore.Controllers
+namespace InternetStore.Controllers;
+public class UserAccountController : Controller
 {
-    public class UserAccountController : Controller
+    private readonly IMongoDatabase _database;
+    private readonly IMongoCollection<User> _users;
+
+    public UserAccountController(IMongoDatabase database)
     {
-        private readonly IMongoDatabase _database;
-        private readonly IMongoCollection<User> _users;
-        private User currentUser;
+        _database = database;
+        _users = _database.GetCollection<User>("Users");
+    }
 
-        public UserAccountController(IMongoDatabase database)
+    [HttpGet]
+    public IActionResult SignIn()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> SignIn(SignInUser user)
+    {
+        if (ModelState.IsValid)
         {
-            _database = database;
-            _users = _database.GetCollection<User>("Users");
-            currentUser = null;
+            await _users.FindAsync(signInUser => signInUser.Email == user.Email);
+            return Redirect("~/Home/Index/");
         }
 
-        [HttpGet]
-        public IActionResult SignIn()
-        {
-            return View();
-        }
+        return View(user);
+    }
 
-        [HttpPost]
-        public IActionResult SignIn(SignInUser user)
+    [HttpGet]
+    public IActionResult SignUp()
+    {
+
+        return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> SignUp(SignUpUser user)
+    {
+        if (ModelState.IsValid)
         {
-            if (ModelState.IsValid)
+            var signUpUser = _users.Find(item => item.Email == user.Email).FirstOrDefault();
+
+            if (signUpUser == null)
             {
-                _users.Find(signInUser => signInUser.Email == user.Email).FirstOrDefault();
-                return Redirect("~/Home/Index/");
+                var newUser = new User(user.Email, user.Password);
+                await _users.InsertOneAsync(newUser);
+
+                await Authenticate(newUser.Email);
+
+                return RedirectToAction("SignIn", "UserAccount");
             }
-
-            return View(user);
         }
 
-        [HttpGet]
-        public IActionResult SignUp()
-        {
+        return View(user);
+    }
 
-            return View();
-        }
+    private async Task Authenticate(string email)
+    {
 
-        [HttpPost]
-        public IActionResult SignUp(SignUpUser user)
-        {
-            if (!ModelState.IsValid)
-                return View(user);
+    }
 
-            var tempUser = _users.Find(signUpUser => signUpUser.Email == user.Email).FirstOrDefault();
+    public new IActionResult SignOut()
+    {
 
-            if (tempUser == null)
-            {
-                tempUser = new User(user.Email, user.Password);
-                _users.InsertOne(tempUser);
-                return Redirect("SignIn");
-            }
-
-            return View();
-        }
-
-        public new IActionResult SignOut()
-        {
-
-            return RedirectToAction("SignIn");
-        }
+        return RedirectToAction("SignIn");
     }
 }
+

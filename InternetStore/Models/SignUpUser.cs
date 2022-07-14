@@ -1,19 +1,29 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FluentValidation;
+using System.ComponentModel.DataAnnotations;
 
-namespace InternetStore.Models
+namespace InternetStore.Models;
+public class SignUpUser
 {
-    public class SignUpUser
+    public string Id { get; set; }
+
+    public string Email { get; set; }
+
+    public string Password { get; set; }
+
+    public string PasswordConfirm { get; set; }
+
+}
+
+public class SignUpUserValidator : AbstractValidator<SignUpUser>
+{
+    public SignUpUserValidator()
     {
-        public string Id { get; set; }
+        RuleFor(c => c.Email).NotEmpty().WithMessage("Enter a email");
+        RuleFor(c => c.Email).EmailAddress().WithMessage("Wrong login");
+        RuleFor(c => c.Password).NotEmpty().WithMessage("Enter a password");
+        RuleFor(c => c.PasswordConfirm).NotEmpty().WithMessage("Confirm the password");
 
-        [Required(ErrorMessage = "Enter a email")]
-        public string Email { get; set; }
-
-        [Required(ErrorMessage = "Enter a password")]
-        public string Password { get; set; }
-
-        [Required(ErrorMessage = "Confirm the password")]
-        public string PasswordConfirm { get; set; }
-
+        RuleFor(x => x).Must(x => x.PasswordConfirm == x.Password).WithMessage("Passwords do not match");
     }
 }
+
