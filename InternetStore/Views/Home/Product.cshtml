@@ -1,4 +1,4 @@
-﻿
+﻿@model Product
 
 @section Links{
     <link rel="stylesheet" type="text/css" href="~/css/bootstrap/bootstrap.min.css">
@@ -21,7 +21,7 @@
                 <div class="breadcrumbs d-flex flex-column align-items-center justify-content-center">
                     <ul class="d-flex flex-row align-items-start justify-content-start text-center">
                         <li><a href="@Url.Action("Index","Home")">Home</a></li>
-                        <li><a href="#">item.category</a></li>
+                        <li><a href="#">@Model.Category.Title</a></li>
 
                     </ul>
                 </div>
@@ -37,19 +37,19 @@
 
                 <!-- Product Image -->
                 <div class="col-lg-6">
-                    <img src="" />
+                    <img src="@Model.Image" />
                 </div>
 
                 <!-- Product Info -->
                 <div class="col-lg-6 product_col">
                     <div class="product_info">
-                        <div class="product_name">item.title</div>
+                        <div class="product_name">@Model.Title</div>
                         <div class="product_category">In Category</div>
                         <div class="product_rating_container d-flex flex-row align-items-center justify-content-start">
                             <div class="rating_r rating_r_4 home_item_rating">
                             </div>
                         </div>
-                        <div class="product_price">$item.price</div>
+                        <div class="product_price">$@Model.Price</div>
                         <div class="product_size">
                             <div class="product_size_title">Select Size</div>
                             <ul class="d-flex flex-row align-items-start justify-content-start">
@@ -86,7 +86,7 @@
                             </ul>
                         </div>
                         <div class="product_text">
-                            <p> item.description </p>
+                            <p> @Model.Description </p>
                         </div>
                         <div class="product_buttons">
                             <div class="text-right d-flex flex-row align-items-start justify-content-start">

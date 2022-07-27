@@ -6,10 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using FluentValidation.AspNetCore;
 using InternetStore.Models;
 
@@ -20,7 +16,6 @@ public class Startup
     public Startup(IConfiguration configuration)
     {
         _appsettings = configuration.Get<Appsettings>();
-
     }
 
     public void ConfigureServices(IServiceCollection services)
@@ -50,6 +45,8 @@ public class Startup
 
         app.UseRouting();
 
+        app.UseAuthentication();
+
         app.UseAuthorization();
 
         app.UseEndpoints(endpoints =>
@@ -72,7 +69,7 @@ public class Startup
                 );
             endpoints.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Product}/{id?}"
+                pattern: "{controller=Home}/{action=Product}/{id}"
                 );
         });
     }

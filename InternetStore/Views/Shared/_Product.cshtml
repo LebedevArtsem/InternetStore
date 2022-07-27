@@ -1,12 +1,15 @@
 ﻿@model Product
 
 <div class="product">
-    <div class="product_image"><img src="@Model.Image" alt=""></div>
+    <div class="product_image">
+        <a href="@Url.Action("Product","Home",@Model)"><img src="@Model.Image" alt=""></a>
+        
+    </div>
     <div class="product_content">
         <div class="product_info d-flex flex-row align-items-start justify-content-start">
             <div>
                 <div>
-                    <div class="product_name"><a href="#">@Model.Title</a></div>
+                    <div class="product_name"><a href="@Url.Action("Product","Home",@Model)">@Model.Title</a></div>
                     <div class="product_category">In Category</div>
                 </div>
             </div>

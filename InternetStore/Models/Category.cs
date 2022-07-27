@@ -1,7 +1,15 @@
-﻿namespace InternetStore.Models
+﻿using System;
+
+namespace InternetStore.Models;
+public class Category
 {
-    public class Category
+    public string Id { get; set; }
+
+    public string Title { get; set; }
+
+    public Category()
     {
-        public string Title { get; set; }
+        Id = Guid.NewGuid().ToString();
     }
 }
+

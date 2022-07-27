@@ -54,7 +54,7 @@ public class UserAccountController : Controller
                 var newUser = new User(user.Email, user.Password);
                 await _users.InsertOneAsync(newUser);
 
-                await Authenticate(newUser.Email);
+                //await Authenticate(newUser.Email);
 
                 return RedirectToAction("SignIn", "UserAccount");
             }
@@ -63,10 +63,10 @@ public class UserAccountController : Controller
         return View(user);
     }
 
-    private async Task Authenticate(string email)
-    {
+    //private async Task Authenticate(string email)
+    //{
 
-    }
+    //}
 
     public new IActionResult SignOut()
     {

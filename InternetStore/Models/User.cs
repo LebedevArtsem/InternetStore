@@ -1,11 +1,8 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using System;
+﻿using System;
 
 namespace InternetStore.Models;
 public class User
 {
-    [BsonId]
     public string Id { get; set; }
 
     public string Firstname { get; set; }
