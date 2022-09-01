@@ -1,5 +1,10 @@
-﻿
+﻿@using InternetStore.Domain;
 @model IEnumerable<Product>
+
+@{
+    var products = ViewData["Products"] as List<Product>;
+    var category = ViewData["Category"] as Category;
+}
 
 @section Links{
     <link rel="stylesheet" type="text/css" href="~/css/bootstrap/bootstrap.min.css">
@@ -20,8 +25,8 @@
                 <div class="home_title">Category Page</div>
                 <div class="breadcrumbs d-flex flex-column align-items-center justify-content-center">
                     <ul class="d-flex flex-row align-items-start justify-content-start text-center">
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#"></a></li>
+                        <li><a href="@Url.Action("Index","Home")">Home</a></li>
+                        <li><a href="@Url.Action("Category","Home",@category)">@category.Title</a></li>
                     </ul>
                 </div>
             </div>
@@ -56,7 +61,7 @@
 
             <div class="row products_row products_container grid">
 
-                @foreach (var item in Model)
+                @foreach (var item in products)
             {
                 <!-- Product -->
                 <div class="col-xl-4 col-md-6 grid-item new">

@@ -1,4 +1,6 @@
-﻿using InternetStore.Models;
+﻿using InternetStore.Domain;
+using InternetStore.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
@@ -30,31 +32,37 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        var list = _products.Find(product => true).ToList();
+        ViewData["Products"] = _products.Find(product => true).ToList();
+        ViewData["Categories"] = _categories.Find(category => true).ToList();
 
-        return View(list);
+        return View();
     }
 
+    [HttpGet]
     public IActionResult Product(Product product)
     {
-        var prod = _products.Find(item => item.Id == product.Id).First();
+        ViewData["Product"] = _products.Find(item => item.Id == product.Id).First();
 
-        return View(prod);
+        return View();
     }
 
-    public IActionResult Category(string categoryId)
+    public IActionResult Category(Category category)
     {
-        var list = _products.Find(product => true).ToList();
+        ViewData["Products"] = _products.Find(product => product.Category.Id == category.Id).ToList();
         //var category = _categories.Find(new BsonDocument()).ToList();
-        
-        return View(list);
+        ViewData["Category"] = _categories.Find(item => item.Id == category.Id).First();
+        var categories = _products.Find(product => product.Category.Id == category.Id).ToList();
+
+        return View();
     }
 
+    [Authorize(Policy = "User")]
     public IActionResult Cart()
     {
         return View();
     }
 
+    [Authorize(Policy = "User")]
     public IActionResult Checkout()
     {
         return View();

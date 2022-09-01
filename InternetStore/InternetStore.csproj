@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\lib\my\" />
+    <Folder Include="Infrastructure\" />
   </ItemGroup>
 
   <ItemGroup>

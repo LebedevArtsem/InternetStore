@@ -1,13 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using MongoDB.Driver;
 using FluentValidation.AspNetCore;
-using InternetStore.Models;
 
 namespace InternetStore;
 public class Startup
@@ -26,7 +24,21 @@ public class Startup
         services.AddSingleton(provider => new MongoClient(_appsettings.Database.ConnectionString)
         .GetDatabase(_appsettings.Database.DatabaseName));
 
-        services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+        services.AddAuthentication("CookieAuth").AddCookie("CookieAuth", options =>
+        {
+            options.Cookie.Name = "CookieAuth";
+            options.LoginPath = "/UserAccount/SignIn";
+            options.AccessDeniedPath = "/Home/Index"; 
+        });
+
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("User",
+                policy => policy.RequireClaim("User"));
+
+            options.AddPolicy("Admin",
+                policy => policy.RequireClaim("Admin"));
+        });
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

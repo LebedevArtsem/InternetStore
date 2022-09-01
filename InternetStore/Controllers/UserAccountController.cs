@@ -1,6 +1,11 @@
-﻿using InternetStore.Models;
+﻿using InternetStore.Domain;
+using InternetStore.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
+using System;
+using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace InternetStore.Controllers;
@@ -22,16 +27,32 @@ public class UserAccountController : Controller
     }
 
     [HttpPost]
-    [ValidateAntiForgeryToken]
     public async Task<IActionResult> SignIn(SignInUser user)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
+            return View(user);
+
+        try
         {
-            await _users.FindAsync(signInUser => signInUser.Email == user.Email);
-            return Redirect("~/Home/Index/");
+            var findUser = _users.Find(signInUser => signInUser.Email == user.Email && signInUser.Password == user.Password).First();
+        }
+        catch (InvalidOperationException)
+        {
+            ViewData["Message"] = "Wrong login or password";
+            return View(user);
         }
 
-        return View(user);
+        var claims = new List<Claim> {
+            new Claim(ClaimTypes.Email, $"{user.Email}"),
+            new Claim("User","true")
+        };
+
+        var identity = new ClaimsIdentity(claims, "CookieAuth");
+        var claimsPrincipal = new ClaimsPrincipal(identity);
+
+        await HttpContext.SignInAsync("CookieAuth", claimsPrincipal);
+
+        return Redirect("~/Home/Index/");
     }
 
     [HttpGet]
@@ -42,7 +63,6 @@ public class UserAccountController : Controller
     }
 
     [HttpPost]
-    [ValidateAntiForgeryToken]
     public async Task<IActionResult> SignUp(SignUpUser user)
     {
         if (ModelState.IsValid)
@@ -54,8 +74,6 @@ public class UserAccountController : Controller
                 var newUser = new User(user.Email, user.Password);
                 await _users.InsertOneAsync(newUser);
 
-                //await Authenticate(newUser.Email);
-
                 return RedirectToAction("SignIn", "UserAccount");
             }
         }
@@ -63,15 +81,12 @@ public class UserAccountController : Controller
         return View(user);
     }
 
-    //private async Task Authenticate(string email)
-    //{
-
-    //}
-
-    public new IActionResult SignOut()
+    [HttpGet]
+    public async Task<IActionResult> SignOutAsync()
     {
+        await HttpContext.SignOutAsync("CookieAuth");
 
-        return RedirectToAction("SignIn");
+        return RedirectToAction("SignIn","UserAccount");
     }
 }
 

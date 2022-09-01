@@ -1,5 +1,9 @@
 ﻿@model SignInUser
 
+@{
+    string message = ViewData["Message"] as string;
+}
+
 @section Links{
     <link rel="stylesheet" type="text/css" href="~/css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="~/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
@@ -24,6 +28,10 @@
 
             <input asp-for="Password" placeholder="Password" type="password">
             <span asp-validation-for="Password" class="alert-danger"></span>
+            @if (message != null)
+            {
+                <span class="alert-danger">@message</span>
+            }
         </div>
         <button type="submit">
             Sign In

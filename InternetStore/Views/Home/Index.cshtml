@@ -1,8 +1,9 @@
-﻿@model List<Product>
+﻿@using InternetStore.Domain;
 
 @{
-    ViewData["Title"] = "Home Page";
     Layout = "/Views/Shared/_Layout.cshtml";
+    List<Product> products = ViewData["Products"] as List<Product>;
+    List<Category> categories = ViewData["Categories"] as List<Category>; 
 }
 
 @section Links{
@@ -28,7 +29,7 @@
                 @for (int i = 0; i < 3; i++)
             {
                 <!-- Slide -->
-                @await Html.PartialAsync("_Slide",@Model[i])
+                @await Html.PartialAsync("_Slide",products[i])
             }
 
         </div>
@@ -50,16 +51,16 @@
             <div class="col">
                 <div class="page_nav">
                     <ul class="d-flex flex-row align-items-start justify-content-center">
-                        <li><a href="@Url.Action("Category","Home")">Women</a></li>
-                        <li><a href="#">Men</a></li>
-                        <li><a href="#">Kids</a></li>
+                        @foreach(var item in categories){
+                            <li><a href="@Url.Action("Category","Home",item)">@item.Title</a></li>
+                        }
                     </ul>
                 </div>
             </div>
         </div>
         <div class="row products_row">
 
-            @foreach (var item in Model)
+            @foreach (var item in products)
             {
                 <!-- Product -->
                 <div class="col-xl-4 col-md-6">

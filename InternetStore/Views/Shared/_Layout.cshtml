@@ -1,4 +1,5 @@
-﻿@{
+﻿@using InternetStore.Domain;
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -33,9 +34,11 @@
                 </div>
                 <nav class="main_nav">
                     <ul class="d-flex flex-row align-items-start justify-content-start">
-                        <li><a href="@Url.Action("Category","Home")">Women</a></li>
-                        <li><a href="#">Men</a></li>
-                        <li><a href="#">Kids</a></li>
+                        
+                            <li><a href="#">Women</a></li>
+                            <li><a href="#">Women</a></li>
+                            <li><a href="#">Women</a></li>
+                        
                     </ul>
                 </nav>
                 <div class="header_right d-flex flex-row align-items-center justify-content-start ml-auto">
@@ -45,10 +48,10 @@
                             <div><img src="~/images/user.svg" alt=""></div>
                         </div>
                         <ul>
-                            @if (false)
+                            @if (User.Identity.IsAuthenticated)
                             {
-                                <li><a href="">user.username</a></li>
-                                <li><a href="">Sign Out</a></li>
+                                <li><a href="#">@User.Identity.Name</a></li>
+                                <li><a href="@Url.Action("SignOut","UserAccount")">Sign Out</a></li>
                             }
                             else
                             {
@@ -59,15 +62,15 @@
                     </div>
                     <!-- Cart -->
                     <div class="cart">
-                        @if (true)
+                        @if (User.Identity.IsAuthenticated)
                         {
-                            <a href="#">
+                            <a href="@Url.Action("SignIn","Home")">
                                 <div><img class="svg" src="~/images/cart.svg" alt=""></div>
                             </a>
                         }
                         else
                         {
-                            <a href="@Url.Action("SignIn","Home")">
+                            <a href="#">
                                 <div><img class="svg" src="~/images/cart.svg" alt=""></div>
                             </a>
                         }
