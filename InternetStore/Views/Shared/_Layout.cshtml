@@ -36,8 +36,8 @@
                     <ul class="d-flex flex-row align-items-start justify-content-start">
                         
                             <li><a href="#">Women</a></li>
-                            <li><a href="#">Women</a></li>
-                            <li><a href="#">Women</a></li>
+                            <li><a href="#">Men</a></li>
+                            <li><a href="#">Kids</a></li>
                         
                     </ul>
                 </nav>
@@ -64,13 +64,13 @@
                     <div class="cart">
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <a href="@Url.Action("SignIn","Home")">
+                            <a href="@Url.Action("Cart","Home")">
                                 <div><img class="svg" src="~/images/cart.svg" alt=""></div>
                             </a>
                         }
                         else
                         {
-                            <a href="#">
+                            <a href="@Url.Action("SignIn","UserAccount")">
                                 <div><img class="svg" src="~/images/cart.svg" alt=""></div>
                             </a>
                         }

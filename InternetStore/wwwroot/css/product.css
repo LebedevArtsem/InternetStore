@@ -1,26 +1,4 @@
 @charset "utf-8";
-/* CSS Document */
-
-/******************************
-
-[Table of Contents]
-
-1. Fonts
-2. Body and some general stuff
-3. Header
-4. Menu
-5. Home
-6. Product
-7. Boxes
-8. Footer
-
-
-******************************/
-
-/***********
-1. Fonts
-***********/
-
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900');
 @font-face
 {
@@ -28,16 +6,11 @@
 	src: url('../fonts/FuturaLT-Book.ttf')  format('truetype');
 }
 
-/*********************************
-2. Body and some general stuff
-*********************************/
-
 *
 {
 	margin: 0;
 	padding: 0;
 	-webkit-font-smoothing: antialiased;
-	-webkit-text-shadow: rgba(0,0,0,.01) 0 0 1px;
 	text-shadow: rgba(0,0,0,.01) 0 0 1px;
 }
 body
@@ -69,7 +42,6 @@ p
 	font-weight: 300;
 	color: #969696;
 	-webkit-font-smoothing: antialiased;
-	-webkit-text-shadow: rgba(0,0,0,.01) 0 0 1px;
 	text-shadow: rgba(0,0,0,.01) 0 0 1px;
 }
 p a
@@ -80,7 +52,6 @@ p a
 	border-bottom: solid 1px #ffa07f;
 	-webkit-transition: all 200ms ease;
 	-moz-transition: all 200ms ease;
-	-ms-transition: all 200ms ease;
 	-o-transition: all 200ms ease;
 	transition: all 200ms ease;
 }
@@ -92,7 +63,6 @@ a
 {
 	-webkit-transition: all 200ms ease;
 	-moz-transition: all 200ms ease;
-	-ms-transition: all 200ms ease;
 	-o-transition: all 200ms ease;
 	transition: all 200ms ease;
 }
@@ -100,7 +70,6 @@ a, a:hover, a:visited, a:active, a:link
 {
 	text-decoration: none;
 	-webkit-font-smoothing: antialiased;
-	-webkit-text-shadow: rgba(0,0,0,.01) 0 0 1px;
 	text-shadow: rgba(0,0,0,.01) 0 0 1px;
 }
 p a:active
@@ -135,7 +104,6 @@ h1, h2, h3, h4, h5, h6
 {
 	font-family: 'Roboto', sans-serif;
 	-webkit-font-smoothing: antialiased;
-	-webkit-text-shadow: rgba(0,0,0,.01) 0 0 1px;
 	text-shadow: rgba(0,0,0,.01) 0 0 1px;
 	line-height: 1.2;
 }
@@ -195,7 +163,6 @@ section
 {
 	-webkit-transition: all 200ms ease;
 	-moz-transition: all 200ms ease;
-	-ms-transition: all 200ms ease;
 	-o-transition: all 200ms ease;
 	transition: all 200ms ease;
 }
@@ -203,7 +170,6 @@ section
 {
 	-webkit-transition: all 300ms ease;
 	-moz-transition: all 300ms ease;
-	-ms-transition: all 300ms ease;
 	-o-transition: all 300ms ease;
 	transition: all 300ms ease;
 }
@@ -211,7 +177,6 @@ section
 {
 	-webkit-transition: all 400ms ease;
 	-moz-transition: all 400ms ease;
-	-ms-transition: all 400ms ease;
 	-o-transition: all 400ms ease;
 	transition: all 400ms ease;
 }
@@ -219,7 +184,6 @@ section
 {
 	-webkit-transition: all 500ms ease;
 	-moz-transition: all 500ms ease;
-	-ms-transition: all 500ms ease;
 	-o-transition: all 500ms ease;
 	transition: all 500ms ease;
 }
@@ -990,6 +954,7 @@ section
 	font-weight: 500;
 	margin-top: 37px;
 	line-height: 0.75;
+	display:flex;
 }
 .product_price span
 {
@@ -1081,7 +1046,6 @@ section
 	background: rgba(255,255,255,0);
 	-webkit-transition: all 200ms ease;
 	-moz-transition: all 200ms ease;
-	-ms-transition: all 200ms ease;
 	-o-transition: all 200ms ease;
 	transition: all 200ms ease;
 }

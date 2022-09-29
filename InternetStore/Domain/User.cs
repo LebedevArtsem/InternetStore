@@ -20,11 +20,12 @@ public class User
         Id = Guid.NewGuid().ToString();
     }
 
-    public User(string email, string password)
+    public User(string email, string name, string password)
     {
         Id = Guid.NewGuid().ToString();
         Email = email;
         Password = password;
+        Firstname = name;
     }
 }
 

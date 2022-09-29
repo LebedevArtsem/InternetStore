@@ -3,14 +3,17 @@
 
 <div class="product">
     <div class="product_image">
-        <a href="@Url.Action("Product","Home",@Model)"><img src="@Model.Image" alt=""></a>
-        
+        <a asp-controller="Home" asp-action="Product" asp-route-id="@Model.Id">
+            <img src="@Model.Image" alt="">
+        </a>
     </div>
     <div class="product_content">
         <div class="product_info d-flex flex-row align-items-start justify-content-start">
             <div>
                 <div>
-                    <div class="product_name"><a href="@Url.Action("Product","Home",@Model)">@Model.Title</a></div>
+                    <div class="product_name">
+                        <a asp-controller="Home" asp-action="Product" asp-route-id="@Model.Id">@Model.Title</a>
+                    </div>
                     <div class="product_category">In Category</div>
                 </div>
             </div>
@@ -27,12 +30,28 @@
         <div class="product_buttons">
             <div class="text-right d-flex flex-row align-items-start justify-content-start">
                 <div class="product_button product_fav text-center d-flex flex-column align-items-center justify-content-center">
-                    <div><div><img src="~/images/heart_2.svg" class="svg" alt=""><div>+</div></div></div>
+                    <div>
+                        <div>
+                            <img src="~/images/heart_2.svg" class="svg" alt="">
+
+                        </div>
+                    </div>
                 </div>
+
                 <div class="product_button product_cart text-center d-flex flex-column align-items-center justify-content-center">
-                    <div><div><img src="~/images/cart.svg" class="svg" alt=""><div>+</div></div></div>
+                    <div>
+
+                        <div>
+                            <a asp-controller="Home" asp-action="Product" asp-route-id="@Model.Id">
+                                <img src="~/images/cart.svg">
+                            </a>
+                        </div>
+
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
 </div>
+

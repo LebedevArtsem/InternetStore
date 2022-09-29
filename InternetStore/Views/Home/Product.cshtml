@@ -25,7 +25,6 @@
                     <ul class="d-flex flex-row align-items-start justify-content-start text-center">
                         <li><a href="@Url.Action("Index","Home")">Home</a></li>
                         <li><a href="@Url.Action("Category","Home",@product.Category)">@product.Category.Title</a></li>
-
                     </ul>
                 </div>
             </div>
@@ -40,19 +39,22 @@
 
                 <!-- Product Image -->
                 <div class="col-lg-6">
-                    <img src="@product.Image" />
+                    <img src="@product.Image" id="product_image" />
                 </div>
 
                 <!-- Product Info -->
                 <div class="col-lg-6 product_col">
                     <div class="product_info">
-                        <div class="product_name">@product.Title</div>
+                        <div class="product_name" id="product_name">@product.Title</div>
                         <div class="product_category">In Category</div>
                         <div class="product_rating_container d-flex flex-row align-items-center justify-content-start">
                             <div class="rating_r rating_r_4 home_item_rating">
                             </div>
                         </div>
-                        <div class="product_price">$@product.Price</div>
+                        <div class="product_price">
+                            <div>$</div>
+                            <div id="product_price">@product.Price</div>
+                        </div>
                         <div class="product_size">
                             <div class="product_size_title">Select Size</div>
                             <ul class="d-flex flex-row align-items-start justify-content-start">
@@ -61,7 +63,7 @@
                                 <li>
                                     @if (item.Value != 0)
                                     {
-                                        <input type="radio" id="@item.Key" name="product_radio"
+                                        <input type="radio" id="@item.Key" name="product_radio" value="@item.Key"
                                        class="regular_radio">
                                     }
                                     else
@@ -83,18 +85,14 @@
                             <div class="product_button product_fav text-center d-flex flex-column align-items-center justify-content-center">
                                 <div>
                                     <div>
-                                        <img src="~/images/heart_2.svg" class="svg" alt="">
-                                        <div>+</div>
+                                        <img src="~/images/heart_2.svg">
                                     </div>
                                 </div>
                             </div>
-                            <div class="product_button product_cart text-center d-flex flex-column align-items-center justify-content-center">
+                            <div id="button_add_to_cart" class="product_button product_cart text-center d-flex flex-column align-items-center justify-content-center">
                                 <div>
                                     <div>
-                                        <a href="#">
-                                            <img src="~/images/cart.svg" class="svg" alt="">
-                                        </a>
-                                        <div>+</div>
+                                        <img src="~/images/cart.svg">
                                     </div>
                                 </div>
                             </div>

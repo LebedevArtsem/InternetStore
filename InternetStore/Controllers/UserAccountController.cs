@@ -27,23 +27,26 @@ public class UserAccountController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> SignIn(SignInUser user)
+    public async Task<IActionResult> SignIn(SignInUser signInUser)
     {
         if (!ModelState.IsValid)
-            return View(user);
+            return View(signInUser);
+
+        User user;
 
         try
         {
-            var findUser = _users.Find(signInUser => signInUser.Email == user.Email && signInUser.Password == user.Password).First();
+            user = _users.Find(item => item.Email == signInUser.Email && item.Password == signInUser.Password).First();
         }
         catch (InvalidOperationException)
         {
             ViewData["Message"] = "Wrong login or password";
-            return View(user);
+            return View(signInUser);
         }
 
         var claims = new List<Claim> {
             new Claim(ClaimTypes.Email, $"{user.Email}"),
+            new Claim(ClaimTypes.Name, $"{user.Firstname}"),
             new Claim("User","true")
         };
 
@@ -71,7 +74,7 @@ public class UserAccountController : Controller
 
             if (signUpUser == null)
             {
-                var newUser = new User(user.Email, user.Password);
+                var newUser = new User(user.Email, user.Name, user.Password);
                 await _users.InsertOneAsync(newUser);
 
                 return RedirectToAction("SignIn", "UserAccount");
@@ -86,7 +89,7 @@ public class UserAccountController : Controller
     {
         await HttpContext.SignOutAsync("CookieAuth");
 
-        return RedirectToAction("SignIn","UserAccount");
+        return RedirectToAction("SignIn", "UserAccount");
     }
 }
 

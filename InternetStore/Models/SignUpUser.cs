@@ -8,6 +8,8 @@ public class SignUpUser
 
     public string Email { get; set; }
 
+    public string Name { get; set; }
+
     public string Password { get; set; }
 
     public string PasswordConfirm { get; set; }
@@ -20,6 +22,7 @@ public class SignUpUserValidator : AbstractValidator<SignUpUser>
     {
         RuleFor(c => c.Email).NotEmpty().WithMessage("Enter a email");
         RuleFor(c => c.Email).EmailAddress().WithMessage("Wrong login");
+        RuleFor(c => c.Name).NotEmpty().WithMessage("Wrong name");
         RuleFor(c => c.Password).NotEmpty().WithMessage("Enter a password");
         RuleFor(c => c.PasswordConfirm).NotEmpty().WithMessage("Confirm the password");
 

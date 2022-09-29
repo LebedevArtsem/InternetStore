@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using MongoDB.Driver;
 using FluentValidation.AspNetCore;
 
@@ -18,6 +17,8 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
+
+
         services.AddControllersWithViews()
                 .AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<Startup>());
 
@@ -28,7 +29,7 @@ public class Startup
         {
             options.Cookie.Name = "CookieAuth";
             options.LoginPath = "/UserAccount/SignIn";
-            options.AccessDeniedPath = "/Home/Index"; 
+            options.AccessDeniedPath = "/Home/Index";
         });
 
         services.AddAuthorization(options =>
@@ -39,6 +40,8 @@ public class Startup
             options.AddPolicy("Admin",
                 policy => policy.RequireClaim("Admin"));
         });
+
+        services.AddCors();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -57,6 +60,8 @@ public class Startup
 
         app.UseRouting();
 
+        app.UseCors(builder => builder.AllowAnyOrigin());
+
         app.UseAuthentication();
 
         app.UseAuthorization();
@@ -65,23 +70,11 @@ public class Startup
         {
             endpoints.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/"
+                pattern: "{controller=Home}/{action=Index}/{id?}"
                 );
             endpoints.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=UserAccount}/{action=SignUp}"
-                );
-            endpoints.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=UserAccount}/{action=SignIn}"
-                );
-            endpoints.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Category}/{id?}"
-                );
-            endpoints.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Product}/{id}"
+                pattern: "api/{controller=Home}/{id?}"
                 );
         });
     }
