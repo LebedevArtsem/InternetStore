@@ -30,9 +30,18 @@
 /*********************************
 2. Body and some general stuff
 *********************************/
+.buttons_quantity {
+	background: white;
+	width: 20px;
+	height: 23px;
+	margin: 2px;
+	border: solid 2px #969696;
+}
+.buttons_quantity:active {
+	
+}
 
-*
-{
+* {
 	margin: 0;
 	padding: 0;
 	-webkit-font-smoothing: antialiased;

@@ -16,15 +16,18 @@
     <div class="super_overlay"></div>
 
     <!-- Home -->
-
+    <input type="hidden" id="product_id" value="@product.Id"/>
     <div class="home">
         <div class="home_container d-flex flex-column align-items-center justify-content-end">
             <div class="home_content text-center">
                 <div class="home_title">Product Page</div>
                 <div class="breadcrumbs d-flex flex-column align-items-center justify-content-center">
                     <ul class="d-flex flex-row align-items-start justify-content-start text-center">
-                        <li><a href="@Url.Action("Index","Home")">Home</a></li>
-                        <li><a href="@Url.Action("Category","Home",@product.Category)">@product.Category.Title</a></li>
+                        <li><a asp-action="Index" asp-controller="Home">Home</a></li>
+                        <li><a asp-action="Category"
+                           asp-controller="Home"
+                           asp-route-id="@product.Category.Id"
+                           asp-route-title="@product.Category.Title">@product.Category.Title</a></li>
                     </ul>
                 </div>
             </div>

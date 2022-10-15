@@ -1,4 +1,8 @@
-﻿
+﻿@using InternetStore.Domain;
+
+@{
+    var cart = ViewData["Cart"] as Cart;
+}
 @section Links{
     <link rel="stylesheet" type="text/css" href="~/css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="~/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
@@ -10,57 +14,65 @@
     <link rel="stylesheet" type="text/css" href="~/css/my.css">
 }
 
+    <div class="super_overlay"></div>
 
-<div class="super_overlay"></div>
+    <!-- Home -->
 
-<!-- Home -->
-
-<div class="home">
-    <div class="home_container d-flex flex-column align-items-center justify-content-end">
-        <div class="home_content text-center">
-            <div class="home_title">Shopping Cart</div>
-            <div class="breadcrumbs d-flex flex-column align-items-center justify-content-center">
-                <ul class="d-flex flex-row align-items-start justify-content-start text-center">
-                    <li><a href="#">Home</a></li>
-                    <li>Your Cart</li>
-                </ul>
+    <div class="home">
+        <div class="home_container d-flex flex-column align-items-center justify-content-end">
+            <div class="home_content text-center">
+                <div class="home_title">Shopping Cart</div>
+                <div class="breadcrumbs d-flex flex-column align-items-center justify-content-center">
+                    <ul class="d-flex flex-row align-items-start justify-content-start text-center">
+                        <li><a href="#">Home</a></li>
+                        <li>Your Cart</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Cart -->
+    <!-- Cart -->
 
-<div class="cart_section">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <div class="cart_container">
+    <div class="cart_section">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="cart_container">
 
-                    <!-- Cart Bar -->
-                    <div class="cart_bar">
-                        <ul class="cart_bar_list item_list d-flex flex-row align-items-center justify-content-end">
-                            <li class="mr-auto">Product</li>
-                            <li>Size</li>
-                            <li>Price</li>
-                            <li>Quantity</li>
-                            <li>Total</li>
-                        </ul>
-                    </div>
+                        <!-- Cart Bar -->
+                        <div class="cart_bar">
+                            <ul class="cart_bar_list item_list d-flex flex-row align-items-center justify-content-end">
+                                <li class="mr-auto">Product</li>
+                                <li>Size</li>
+                                <li>Price</li>
+                                <li>Quantity</li>
+                                <li>Total</li>
+                            </ul>
+                        </div>
 
-                    <!-- Cart Items -->
-                    <div class="cart_items">
-                        <ul class="cart_items_list">
-                            
-                            <!-- Cart Item -->
-                            
+                        <!-- Cart Items -->
+                        <div class="cart_items">
+                            <ul class="cart_items_list">
+
+                                @if (cart.Products != null)
+                                {
+                                    <!-- Cart Item -->
+                                    @foreach (var item in cart.Products)
+                                    {
+                                        <partial name="_CartProduct" model="item" />
+
+                                    }
+                                }
+
                         </ul>
                     </div>
 
                     <!-- Cart Buttons -->
                     <div class="cart_buttons d-flex flex-row align-items-start justify-content-start">
                         <div class="cart_buttons_inner ml-sm-auto d-flex flex-row align-items-start justify-content-start flex-wrap">
-                            <div class="button button_clear trans_200"><a href="#">clear cart</a>
+                            <div class="button button_clear trans_200">
+                                <a href="#">clear cart</a>
                             </div>
                             <div class="button button_continue trans_200"><a href="#">buy</a></div>
                         </div>
@@ -70,6 +82,7 @@
         </div>
     </div>
 </div>
+
 
 @section Scripts{
     <script src="~/js/jquery-3.2.1.min.js"></script>
@@ -87,4 +100,4 @@
     <script src="~/plugins/Isotope/isotope.pkgd.min.js"></script>
     <script src="~/plugins/Isotope/fitcolumns.js"></script>
     <script src="~/js/cart.js"></script>
-}
+    }

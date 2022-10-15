@@ -1,0 +1,30 @@
+﻿@using InternetStore.Models;
+@model ProductCart
+
+<li class="cart_item item_list d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-end justify-content-start">
+    <div class="product d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start mr-auto">
+        <div>
+            <div class="product_number"></div>
+        </div>
+        <div>
+            <div class="product_image"><img src="@Model.Image" alt=""></div>
+        </div>
+        <div class="product_name_container">
+            <div class="product_name"><a href="#">@Model.Title</a></div>
+        </div>
+    </div>
+    <div class="product_size product_text"><span>Size: </span>@Model.Size</div>
+    <div class="product_price product_text"><span>Price: </span>$@Model.Price</div>
+    <div class="product_quantity_container">
+        <div class="product_quantity">
+            <button class="buttons_quantity">+</button>
+            <span class="product_text product_num">@Model.Quantity</span>
+            <button class="buttons_quantity">-</button>
+        </div>
+    </div>
+    <div class="product_total product_text"><span>Total: </span>$@Multiply(@Model.Price,@Model.Quantity)</div>
+</li>
+
+@functions{
+    public int Multiply(int x, int y) => x * y;
+}

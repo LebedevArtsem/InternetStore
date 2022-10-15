@@ -65,8 +65,9 @@ public class HomeController : Controller
     public IActionResult Cart()
     {
         var email = User.FindFirstValue(ClaimTypes.Email);
-        var cart = _carts.Find(items => items.User.Email == email);
-        //ViewData["Cart"]
+        ViewData["Cart"] = _carts.Find(cart => cart.User.Email == email).FirstOrDefault();
+        var carts = _carts.Find(cart => cart.User.Email == email).FirstOrDefault();
+        
         return View();
     }
 
@@ -74,17 +75,30 @@ public class HomeController : Controller
     [Authorize(Policy = "User")]
     public IActionResult AddToCart(ProductCart product)
     {
+        if (!ModelState.IsValid)
+            return View(product);
+
         var email = User.FindFirstValue(ClaimTypes.Email);
         var cart = _carts.Find(items => items.User.Email == email).FirstOrDefault();
 
         if (cart == null)
         {
             cart = new Cart();
-            cart.User = _users.Find(user => user.Email == email).FirstOrDefault();  
+            cart.User = _users.Find(user => user.Email == email).FirstOrDefault();
         }
 
-        cart.Products.Add(product);
-        _carts.InsertOne(cart);
+        var productToUpdateQuantity = cart.Products.Find(item => item.Image == product.Image && item.Size == product.Size);
+
+        if (productToUpdateQuantity != null)
+        {
+            productToUpdateQuantity.Quantity++;
+        }
+        else
+        {
+            cart.Products.Add(product);
+        }
+
+        _carts.ReplaceOne(item => item.Id == cart.Id, cart, new ReplaceOptions { IsUpsert = true });
 
         return Ok();
     }

@@ -3,7 +3,7 @@
 @{
     Layout = "/Views/Shared/_Layout.cshtml";
     List<Product> products = ViewData["Products"] as List<Product>;
-    List<Category> categories = ViewData["Categories"] as List<Category>; 
+    List<Category> categories = ViewData["Categories"] as List<Category>;
 }
 
 @section Links{
@@ -17,11 +17,11 @@
     <link rel="stylesheet" type="text/css" href="~/css/my.css">
 }
 
-<div class="super_overlay"></div>
+    <div class="super_overlay"></div>
 
-<!-- Home -->
+    <!-- Home -->
 
-<div class="home">
+    <div class="home">
         <!-- Home Slider -->
         <div class="home_slider_container">
             <div class="owl-carousel owl-theme home_slider">
@@ -29,7 +29,7 @@
                 @for (int i = 0; i < 3; i++)
             {
                 <!-- Slide -->
-                @await Html.PartialAsync("_Slide",products[i])
+                <partial name="_Slide" model="products[i]" />
             }
 
         </div>
@@ -51,8 +51,14 @@
             <div class="col">
                 <div class="page_nav">
                     <ul class="d-flex flex-row align-items-start justify-content-center">
-                        @foreach(var item in categories){
-                            <li><a href="@Url.Action("Category","Home",item)">@item.Title</a></li>
+                        @foreach (var item in categories)
+                        {
+                            <li>
+                                <a asp-action="Category" 
+                                asp-controller="Home" 
+                                asp-route-id="@item.Id" 
+                                asp-route-title="@item.Title">@item.Title</a>
+                            </li>
                         }
                     </ul>
                 </div>
@@ -64,7 +70,7 @@
             {
                 <!-- Product -->
                 <div class="col-xl-4 col-md-6">
-                    @await Html.PartialAsync("_Product",item)
+                    <partial name="_Product" model="item" />
                 </div>
             }
 
