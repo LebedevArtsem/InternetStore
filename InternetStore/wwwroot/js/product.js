@@ -4,7 +4,7 @@ $(document).ready(function () {
             type: "POST",
             url: '/Home/AddToCart',
             data: {
-                
+                Id: $("#product_id").val(),
                 Image: $("#product_image").attr('src'),
                 Title: $("#product_name").text(),
                 Price: $("#product_price").text(),

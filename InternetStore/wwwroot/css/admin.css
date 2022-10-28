@@ -1,0 +1,33 @@
+﻿body {
+}
+
+.main_div {
+    display: flex;
+    width:100%;
+}
+
+.models_display {
+    width:30%;
+    display:flex;
+    justify-content:center;
+}
+
+.models_items {
+    background-color: blue;
+    width:70%;
+}
+.models_names{
+    padding:10px;
+}
+.model_name_item {
+    padding: 10px;
+    width: 250px;
+    margin: 3px;
+    border: 2px solid;
+    text-align: center;
+    font-size:16px;
+}
+
+.model_name_item:hover{
+    opacity:0.7;
+}

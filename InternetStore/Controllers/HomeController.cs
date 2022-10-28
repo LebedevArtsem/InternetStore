@@ -2,8 +2,6 @@
 using InternetStore.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Linq;
 using System.Security.Claims;
@@ -11,8 +9,6 @@ using System.Security.Claims;
 namespace InternetStore.Controllers;
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
-
     private readonly IMongoDatabase _mongoDatabase;
 
     private readonly IMongoCollection<Product> _products;
@@ -23,14 +19,15 @@ public class HomeController : Controller
 
     private readonly IMongoCollection<User> _users;
 
-    public HomeController(ILogger<HomeController> logger, IMongoDatabase mongoDatabase)
+    public HomeController(IMongoDatabase mongoDatabase)
     {
-        _logger = logger;
         _mongoDatabase = mongoDatabase;
         _products = _mongoDatabase.GetCollection<Product>("Products");
         _categories = _mongoDatabase.GetCollection<Category>("Categories");
         _carts = _mongoDatabase.GetCollection<Cart>("Carts");
         _users = _mongoDatabase.GetCollection<User>("Users");
+
+        ViewData["LayoutCategories"] = _categories.Find(item => true).ToList();
     }
 
     [HttpGet]
@@ -51,11 +48,11 @@ public class HomeController : Controller
     }
 
     [HttpGet]
-    public IActionResult Category(Category category)
+    public IActionResult Category(string title, int page)
     {
-        ViewData["Products"] = _products.Find(product => product.Category.Id == category.Id).ToList();
-        ViewData["Category"] = _categories.Find(item => item.Id == category.Id).First();
-        var categories = _products.Find(product => product.Category.Id == category.Id).ToList();
+        var products = _products.Find(product => product.Category.Title == title).ToList();
+        ViewData["Category"] = _categories.Find(item => item.Title == title).First();
+        ViewData["Pagination"] = Pagination<Product>.GetModel(page, 3, products);
 
         return View();
     }
@@ -67,7 +64,7 @@ public class HomeController : Controller
         var email = User.FindFirstValue(ClaimTypes.Email);
         ViewData["Cart"] = _carts.Find(cart => cart.User.Email == email).FirstOrDefault();
         var carts = _carts.Find(cart => cart.User.Email == email).FirstOrDefault();
-        
+
         return View();
     }
 
@@ -87,7 +84,7 @@ public class HomeController : Controller
             cart.User = _users.Find(user => user.Email == email).FirstOrDefault();
         }
 
-        var productToUpdateQuantity = cart.Products.Find(item => item.Image == product.Image && item.Size == product.Size);
+        var productToUpdateQuantity = cart.Products.Find(item => item.Id == product.Id && item.Size == product.Size);
 
         if (productToUpdateQuantity != null)
         {

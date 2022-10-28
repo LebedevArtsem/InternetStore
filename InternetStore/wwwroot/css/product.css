@@ -5,9 +5,11 @@
 	font-family: 'Futura';
 	src: url('../fonts/FuturaLT-Book.ttf')  format('truetype');
 }
+.product_form{
+	display:flex;
+}
 
-*
-{
+* {
 	margin: 0;
 	padding: 0;
 	-webkit-font-smoothing: antialiased;

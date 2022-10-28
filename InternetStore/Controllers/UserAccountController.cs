@@ -47,7 +47,7 @@ public class UserAccountController : Controller
         var claims = new List<Claim> {
             new Claim(ClaimTypes.Email, $"{user.Email}"),
             new Claim(ClaimTypes.Name, $"{user.Firstname}"),
-            new Claim("User","true")
+            new Claim($"{user.Permission}","true")
         };
 
         var identity = new ClaimsIdentity(claims, "CookieAuth");
@@ -61,7 +61,6 @@ public class UserAccountController : Controller
     [HttpGet]
     public IActionResult SignUp()
     {
-
         return View();
     }
 

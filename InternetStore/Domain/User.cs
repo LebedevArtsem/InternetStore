@@ -15,6 +15,8 @@ public class User
 
     public string Email { get; set; }
 
+    public string Permission { get; set; }
+
     public User()
     {
         Id = Guid.NewGuid().ToString();
@@ -26,6 +28,7 @@ public class User
         Email = email;
         Password = password;
         Firstname = name;
+        Permission = "Admin";
     }
 }
 

@@ -1,6 +1,6 @@
-﻿@using InternetStore.Domain;
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
+    var layoutCategories = ViewData["LayoutCategories"];
 }
 
 <!DOCTYPE html>
@@ -27,18 +27,26 @@
                 <div class="logo">
                     <a href="/">
                         <div class="d-flex flex-row align-items-center justify-content-start">
-                            <div><img src="/images/logo_1.png" alt=""></div>
+                            <div><img src="/images/logo_1.png"></div>
                             <div>Esala</div>
                         </div>
                     </a>
                 </div>
                 <nav class="main_nav">
                     <ul class="d-flex flex-row align-items-start justify-content-start">
-
-                        <li><a href="#">Women</a></li>
-                        <li><a href="#">Men</a></li>
-                        <li><a href="#">Kids</a></li>
-
+                        @*@foreach (var item in layoutCategories)
+                        {
+                            <li>
+                                <a asp-action="Category"
+                               asp-controller="Home"
+                               asp-route-id="@item.Id"
+                               asp-route-title="@item.Title">@item.Title</a>
+                            </li>
+                        }*@
+                        @if (ViewData["LayoutCategories"]==null)
+                        {
+                            <li>asdfasdfasdf</li>
+                        }
                     </ul>
                 </nav>
                 <div class="header_right d-flex flex-row align-items-center justify-content-start ml-auto">
@@ -51,12 +59,12 @@
                             @if (User.Identity.IsAuthenticated)
                             {
                                 <li><a href="#">@User.Identity.Name</a></li>
-                                <li><a href="@Url.Action("SignOut","UserAccount")">Sign Out</a></li>
+                                <li><a asp-action="SignOut" asp-controller="UserAccount">Sign Out</a></li>
                             }
                             else
                             {
-                                <li><a href="@Url.Action("SignIn","UserAccount")">Sign In</a></li>
-                                <li><a href="@Url.Action("SignUp","UserAccount")">Sign Up</a></li>
+                                <li><a asp-action="SignIn" asp-controller="UserAccount">Sign In</a></li>
+                                <li><a asp-action="SignUp" asp-controller="UserAccount">Sign Up</a></li>
                             }
                         </ul>
                     </div>
@@ -64,7 +72,7 @@
                     <div class="cart" style="display:flex;">
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <a href="@Url.Action("Cart","Home")">
+                            <a asp-action="Cart" asp-controller="Home">
                                 <div>
                                     <img class="svg" src="~/images/cart.svg" alt="">
                                 </div>
@@ -74,7 +82,7 @@
                         }
                         else
                         {
-                            <a href="@Url.Action("SignIn","UserAccount")">
+                            <a asp-action="SignIn" asp-controller="UserAccount">
                                 <div><img class="svg" src="~/images/cart.svg" alt=""></div>
                             </a>
                         }
@@ -94,6 +102,22 @@
             @RenderBody()
 
         </div>
+
+        @*        <footer>
+        <div class="navbar navbar-dark navbar-expand-md bg-dark">
+        <div class="navbar-nav ml-auto">
+        <a class="nav-item nav-link" href="http://www.facebook.com">
+        <i class="fab fa-facebook-f fa-2x"></i>
+        </a>
+        <a class="nav-item nav-link" href="http://www.vk.com">
+        <i class="fab fa-vk fa-2x"></i>
+        </a>
+        <a class="nav-item nav-link" href="http://www.twitter.com">
+        <i class="fab fa-twitter fa-2x"></i>
+        </a>
+        </div>
+        </div>
+        </footer>*@
 
     </div>
 

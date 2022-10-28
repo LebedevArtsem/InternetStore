@@ -35,4 +35,11 @@ $(document).ready(function()
 		}
 	}
 
+	function initialQuantity() {
+		$("#button_plus").click(function () {
+			var quantity = $("#quantity").val()
+			console.log(quantity)
+        })
+    }
+
 });

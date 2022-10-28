@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\lib\my\" />
     <Folder Include="Infrastructure\" />
   </ItemGroup>
 
@@ -13,6 +12,8 @@
     <PackageReference Include="FluentValidation" Version="11.1.0" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.1.2" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.1.0" />
+    <PackageReference Include="jQuery.Ajax.Unobtrusive" Version="2.0.20710" />
+    <PackageReference Include="Microsoft.jQuery.Unobtrusive.Ajax" Version="3.2.6" />
     <PackageReference Include="MongoDB.Driver" Version="2.16.1" />
   </ItemGroup>
 
