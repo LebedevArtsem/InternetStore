@@ -5,7 +5,7 @@ VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InternetStore", "InternetStore\InternetStore.csproj", "{0076C411-6342-47F2-87CF-C2DF86C51BD1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternetStore.Tests", "InternetStore.Tests\InternetStore.Tests.csproj", "{9E8076DD-EFEA-4B8E-A4E3-D3AD87759DA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InternetStore.Tests", "InternetStore.Tests\InternetStore.Tests.csproj", "{9E8076DD-EFEA-4B8E-A4E3-D3AD87759DA4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

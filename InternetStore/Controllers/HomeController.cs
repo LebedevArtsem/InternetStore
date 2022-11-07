@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace InternetStore.Controllers;
 public class HomeController : Controller
@@ -31,58 +32,53 @@ public class HomeController : Controller
     }
 
     [HttpGet]
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        ViewData["Products"] = _products.Find(product => true).ToList();
-        ViewData["Categories"] = _categories.Find(category => true).ToList();
+        ViewData["Products"] = await _products.Find(product => true).ToListAsync();
 
         return View();
     }
 
+    [Route("Catalog/{id}")]
     [HttpGet]
-    public IActionResult Product(string id)
+    public async Task<IActionResult> Product(string id)
     {
-        ViewData["Product"] = _products.Find(item => item.Id == id).First();
+        ViewData["Product"] = await _products.Find(item => item.Id == id).FirstAsync();
 
         return View();
     }
 
+    [Route("Catalog/{title}/Page_{page}")]
     [HttpGet]
-    public IActionResult Category(string title, int page)
+    public IActionResult Category(string title, int page=1)
     {
         var products = _products.Find(product => product.Category.Title == title).ToList();
         ViewData["Category"] = _categories.Find(item => item.Title == title).First();
-        ViewData["Pagination"] = Pagination<Product>.GetModel(page, 3, products);
+        ViewData["Pagination"] = Pagination<Product>.GetModel(page, 6, products);
 
         return View();
     }
 
     [HttpGet]
-    [Authorize(Policy = "User")]
+    [Authorize(Policy = "User")]    
     public IActionResult Cart()
     {
         var email = User.FindFirstValue(ClaimTypes.Email);
         ViewData["Cart"] = _carts.Find(cart => cart.User.Email == email).FirstOrDefault();
         var carts = _carts.Find(cart => cart.User.Email == email).FirstOrDefault();
-
+        
         return View();
     }
 
     [HttpPost]
     [Authorize(Policy = "User")]
-    public IActionResult AddToCart(ProductCart product)
+    public async Task<IActionResult> AddToCart(ProductCart product)
     {
         if (!ModelState.IsValid)
             return View(product);
 
         var email = User.FindFirstValue(ClaimTypes.Email);
         var cart = _carts.Find(items => items.User.Email == email).FirstOrDefault();
-
-        if (cart == null)
-        {
-            cart = new Cart();
-            cart.User = _users.Find(user => user.Email == email).FirstOrDefault();
-        }
 
         var productToUpdateQuantity = cart.Products.Find(item => item.Id == product.Id && item.Size == product.Size);
 
@@ -95,7 +91,7 @@ public class HomeController : Controller
             cart.Products.Add(product);
         }
 
-        _carts.ReplaceOne(item => item.Id == cart.Id, cart, new ReplaceOptions { IsUpsert = true });
+        await _carts.ReplaceOneAsync(item => item.Id == cart.Id, cart, new ReplaceOptions { IsUpsert = true });
 
         return Ok();
     }

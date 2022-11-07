@@ -28,7 +28,7 @@ public class User
         Email = email;
         Password = password;
         Firstname = name;
-        Permission = "Admin";
+        Permission = "User";
     }
 }
 

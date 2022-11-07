@@ -13,11 +13,13 @@ public class UserAccountController : Controller
 {
     private readonly IMongoDatabase _database;
     private readonly IMongoCollection<User> _users;
+    private readonly IMongoCollection<Cart> _carts;
 
     public UserAccountController(IMongoDatabase database)
     {
         _database = database;
         _users = _database.GetCollection<User>("Users");
+        _carts = _database.GetCollection<Cart>("Carts");
     }
 
     [HttpGet]
@@ -74,7 +76,11 @@ public class UserAccountController : Controller
             if (signUpUser == null)
             {
                 var newUser = new User(user.Email, user.Name, user.Password);
+
                 await _users.InsertOneAsync(newUser);
+
+                var cart = new Cart() { User = newUser };
+                await _carts.InsertOneAsync(cart);
 
                 return RedirectToAction("SignIn", "UserAccount");
             }

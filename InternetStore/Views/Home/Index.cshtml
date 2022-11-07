@@ -1,7 +1,6 @@
 ﻿@{
     Layout = "/Views/Shared/_Layout.cshtml";
     List<Product> products = ViewData["Products"] as List<Product>;
-    List<Category> categories = ViewData["Categories"] as List<Category>;
 }
 
 @section Links{
@@ -47,15 +46,7 @@
             <div class="col">
                 <div class="page_nav">
                     <ul class="d-flex flex-row align-items-start justify-content-center">
-                        @foreach (var item in categories)
-                        {
-                            <li>
-                                <a asp-action="Category" 
-                                asp-controller="Home" 
-                                asp-route-title="@item.Title"
-                                asp-route-page="1">@item.Title</a>
-                            </li>
-                        }
+                        @await Component.InvokeAsync("CategoriesList")
                     </ul>
                 </div>
             </div>

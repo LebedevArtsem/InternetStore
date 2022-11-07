@@ -1,6 +1,5 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
-    var layoutCategories = ViewData["LayoutCategories"];
 }
 
 <!DOCTYPE html>
@@ -34,19 +33,7 @@
                 </div>
                 <nav class="main_nav">
                     <ul class="d-flex flex-row align-items-start justify-content-start">
-                        @*@foreach (var item in layoutCategories)
-                        {
-                            <li>
-                                <a asp-action="Category"
-                               asp-controller="Home"
-                               asp-route-id="@item.Id"
-                               asp-route-title="@item.Title">@item.Title</a>
-                            </li>
-                        }*@
-                        @if (ViewData["LayoutCategories"]==null)
-                        {
-                            <li>asdfasdfasdf</li>
-                        }
+                        @await Component.InvokeAsync("CategoriesList")
                     </ul>
                 </nav>
                 <div class="header_right d-flex flex-row align-items-center justify-content-start ml-auto">
@@ -78,7 +65,7 @@
                                 </div>
 
                             </a>
-                            <div>0</div>
+                            @await Component.InvokeAsync("ProductQuantity")
                         }
                         else
                         {
