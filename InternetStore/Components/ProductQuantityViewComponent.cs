@@ -10,7 +10,7 @@ namespace InternetStore.Components
     public class ProductQuantityViewComponent:ViewComponent
     {
         private readonly IMongoCollection<Cart> _carts;
-        public ProductQuantityViewComponent(IMongoDatabase mongoDatabase)
+        public ProductQuantityViewComponent()
         {
             _carts = mongoDatabase.GetCollection<Cart>("Carts");
         }
