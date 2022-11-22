@@ -4,22 +4,34 @@ using System.Security.Claims;
 using MongoDB.Driver;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using InternetStore.Infrastructure;
 
 namespace InternetStore.Components
 {
-    public class ProductQuantityViewComponent:ViewComponent
+    public class ProductQuantityViewComponent : ViewComponent
     {
         private readonly IMongoCollection<Cart> _carts;
-        public ProductQuantityViewComponent()
+        public ProductQuantityViewComponent(IMongoDatabase database)
         {
-            _carts = mongoDatabase.GetCollection<Cart>("Carts");
-        }
+            _carts = database.GetCollection<Cart>("Carts");
 
-        public async Task<IViewComponentResult> InvokeAsync()
+
+        }   
+
+        public IViewComponentResult Invoke()
         {
-            var email = UserClaimsPrincipal.FindFirstValue(ClaimTypes.Email);
-            var cart = await _carts.Find(item => item.User.Email == email).FirstAsync();
+            var cart = HttpContext.Session.Get<Cart>("Cart");
+
+            if (cart == null)
+            {
+                var email = UserClaimsPrincipal.FindFirstValue(ClaimTypes.Email);
+                cart = _carts.Find(items => items.User.Email == email).FirstOrDefault();
+                HttpContext.Session.Set("Cart", cart);
+            }
+
             var quantity = cart?.Products.Select(item => item.Quantity).Sum();
+
             return View(quantity);
         }
     }

@@ -1,0 +1,74 @@
+﻿.modal_view {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: none;
+    background: rgba(0,0,0,0.05);
+}
+
+.modal_content {
+    padding: 10px;
+    background: white;
+    min-width: 250px;
+}
+
+.modal_view_active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.regular_radio + label {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    appearance: none;
+    width: 36px;
+    height: 36px;
+    background: transparent;
+    border: solid 2px #4a4a4a;
+    color: #4a4a4a;
+    cursor: pointer;
+    margin-right: 14px;
+    font-weight: 700;
+}
+
+.regular_radio[disabled] + label {
+    border: solid 2px #969696;
+    color: #969696;
+    cursor: default;
+}
+
+.regular_radio {
+    display: none;
+}
+.product_size_title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #4a4a4a;
+}
+.product_size ul {
+    margin-top: 22px;
+}
+.button_close {
+    width: 25px;
+    height: 25px;
+    border: none;
+    text-align: center;
+    cursor:pointer;
+}
+.title_button {
+    display: flex;
+    justify-content: space-between;
+}
+.regular_radio:checked + label {
+    color: #2fce98;
+    border-color: #2fce98;
+}

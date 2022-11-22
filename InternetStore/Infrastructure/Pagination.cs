@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace InternetStore.Models
+namespace InternetStore.Infrastructure
 {
     public class Pagination<T> : List<T>
     {

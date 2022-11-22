@@ -1,4 +1,4 @@
-﻿namespace InternetStore.Models
+﻿namespace InternetStore.Infrastructure
 {
     public class DatabaseSettings
     {

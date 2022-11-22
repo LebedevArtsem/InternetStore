@@ -57,7 +57,7 @@ public class UserAccountController : Controller
 
         await HttpContext.SignInAsync("CookieAuth", claimsPrincipal);
 
-        return Redirect("~/Home/Index/");
+        return Redirect("/");
     }
 
     [HttpGet]

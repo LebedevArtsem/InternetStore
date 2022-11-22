@@ -17,7 +17,12 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-
+        services.AddDistributedMemoryCache();
+        services.AddSession(options =>
+        {
+            options.Cookie.HttpOnly = true;
+            options.Cookie.IsEssential = true;
+        });
 
         services.AddControllersWithViews()
                 .AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<Startup>());
@@ -42,6 +47,7 @@ public class Startup
         });
 
         services.AddCors();
+ 
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -55,16 +61,19 @@ public class Startup
             app.UseExceptionHandler("/Home/Error");
             app.UseHsts();
         }
+        
         app.UseHttpsRedirection();
         app.UseStaticFiles();
 
         app.UseRouting();
 
+        app.UseSession();
+
         app.UseCors(builder => builder.AllowAnyOrigin());
 
         app.UseAuthentication();
 
-        app.UseAuthorization();
+        app.UseAuthorization();   
 
         app.UseEndpoints(endpoints =>
         {

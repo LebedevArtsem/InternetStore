@@ -1,10 +1,9 @@
 ﻿using InternetStore.Domain;
-using InternetStore.Models;
+using InternetStore.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace InternetStore.Controllers;
@@ -16,8 +15,6 @@ public class HomeController : Controller
 
     private readonly IMongoCollection<Category> _categories;
 
-    private readonly IMongoCollection<Cart> _carts;
-
     private readonly IMongoCollection<User> _users;
 
     public HomeController(IMongoDatabase mongoDatabase)
@@ -25,7 +22,6 @@ public class HomeController : Controller
         _mongoDatabase = mongoDatabase;
         _products = _mongoDatabase.GetCollection<Product>("Products");
         _categories = _mongoDatabase.GetCollection<Category>("Categories");
-        _carts = _mongoDatabase.GetCollection<Cart>("Carts");
         _users = _mongoDatabase.GetCollection<User>("Users");
 
         ViewData["LayoutCategories"] = _categories.Find(item => true).ToList();
@@ -57,43 +53,6 @@ public class HomeController : Controller
         ViewData["Pagination"] = Pagination<Product>.GetModel(page, 6, products);
 
         return View();
-    }
-
-    [HttpGet]
-    [Authorize(Policy = "User")]    
-    public IActionResult Cart()
-    {
-        var email = User.FindFirstValue(ClaimTypes.Email);
-        ViewData["Cart"] = _carts.Find(cart => cart.User.Email == email).FirstOrDefault();
-        var carts = _carts.Find(cart => cart.User.Email == email).FirstOrDefault();
-        
-        return View();
-    }
-
-    [HttpPost]
-    [Authorize(Policy = "User")]
-    public async Task<IActionResult> AddToCart(ProductCart product)
-    {
-        if (!ModelState.IsValid)
-            return View(product);
-
-        var email = User.FindFirstValue(ClaimTypes.Email);
-        var cart = _carts.Find(items => items.User.Email == email).FirstOrDefault();
-
-        var productToUpdateQuantity = cart.Products.Find(item => item.Id == product.Id && item.Size == product.Size);
-
-        if (productToUpdateQuantity != null)
-        {
-            productToUpdateQuantity.Quantity++;
-        }
-        else
-        {
-            cart.Products.Add(product);
-        }
-
-        await _carts.ReplaceOneAsync(item => item.Id == cart.Id, cart, new ReplaceOptions { IsUpsert = true });
-
-        return Ok();
     }
 
     [HttpGet]

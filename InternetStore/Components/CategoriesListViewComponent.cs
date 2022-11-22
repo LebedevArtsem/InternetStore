@@ -1,7 +1,6 @@
 ﻿using InternetStore.Domain;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace InternetStore.Components

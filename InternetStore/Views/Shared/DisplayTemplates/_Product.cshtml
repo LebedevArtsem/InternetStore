@@ -28,14 +28,16 @@
         </div>
         <div class="product_buttons">
             <div class="text-right d-flex flex-row align-items-start justify-content-start">
-                <div class="product_button product_fav text-center d-flex flex-column align-items-center justify-content-center">
+                <div id="@Model.Id" onclick='get_modal_view(this)'
+                    class="product_button product_fav text-center d-flex flex-column align-items-center justify-content-center">
                     <div>
                         <div>
-                            <img src="~/images/heart_2.svg" class="svg" alt="">
-
+                            <img src="~/images/heart_2.svg" class="svg">
                         </div>
                     </div>
                 </div>
+
+
 
                 <div class="product_button product_cart text-center d-flex flex-column align-items-center justify-content-center">
                     <div>
@@ -50,6 +52,34 @@
                 </div>
 
             </div>
+        </div>
+    </div>
+</div>
+<div class="modal_view" id="@Model.Id modal">
+    <div class="modal_content">
+        <div class="product_size">
+            <div class="title_button">
+                <div class="product_size_title">Select Size</div>
+                <button class="button_close" id="@Model.Id button" onclick="close_modal_view(this)">X</button>
+            </div>
+            <ul class="ul_modal d-flex flex-row align-items-start justify-content-start">
+                @foreach (var item in Model.Sizes)
+                {
+                    <li>
+                        @if (item.Value != 0)
+                        {
+                            <input type="radio" id="@item.Key @Model.Id" name="product_radio" value="@item.Key"
+                           class="regular_radio">
+                        }
+                        else
+                        {
+                            <input type="radio" id="@item.Key @Model.Id" disabled name="product_radio"
+                           class="regular_radio">
+                        }
+                        <label for="@item.Key @Model.Id">@item.Key</label>
+                    </li>
+                }
+            </ul>
         </div>
     </div>
 </div>

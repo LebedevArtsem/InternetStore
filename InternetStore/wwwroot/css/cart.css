@@ -974,12 +974,17 @@ section
 {
 	margin-top: 30px;
 }
-.button
-{
+.button {
 	height: 44px;
 	text-align: center;
 	margin-bottom: 10px;
 	border-radius: 3px;
+	padding: 5px 15px 5px 15px;
+	font-size: 20px;
+	color: white;
+	text-transform: uppercase;
+	font-weight: 800;
+	cursor: pointer;
 }
 .button:not(:last-child)
 {
@@ -996,17 +1001,15 @@ section
 	color: #FFFFFF;
 	text-transform: uppercase;
 }
-.button_continue
-{
-	background: #2fce98;
+.button_continue {
+	background: #399d7b;
 }
 .button_continue:hover
 {
 	background: #000000;
 }
-.button_clear
-{
-	background: #b2b2b2;
+.button_clear {
+	background: #399d7b;
 }
 .button_clear:hover
 {

@@ -2,6 +2,7 @@
 
 
 <li class="cart_item item_list d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-end justify-content-start">
+    <input type="hidden" id="product_id" value="@Model.Id" />
     <div class="product d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start mr-auto">
         <div>
             <div class="product_number">@ViewData["ProductNumber"]</div>
@@ -22,7 +23,8 @@
             <button class="buttons_quantity" id="button_minus">-</button>
         </div>
     </div>
-    <div class="product_total product_text"><span>Total: </span>$@Multiply(@Model.Price,@Model.Quantity)</div>
+    <div class="product_total product_text" style="margin: 0;"><span>Total: </span>$@Multiply(@Model.Price,@Model.Quantity)</div>
+    <button class="delete_btn" id="button_delete">Delete</button>
 </li>
 
 @functions{

@@ -42,7 +42,7 @@
                                 <li>Size</li>
                                 <li>Price</li>
                                 <li>Quantity</li>
-                                <li>Total</li>
+                                <li style="margin-right: 60px;">Total</li>
 
                             </ul>
                         </div>
@@ -51,10 +51,10 @@
                         <div class="cart_items">
                             <ul class="cart_items_list">
 
-                                @if (cart != null)
+                                @if (cart.Products.Count != 0)
                             {
                                 <!-- Cart Item -->
-                                @for (int item = 0; item < cart.Products.Capacity; item++)
+                                @for (int item = 0; item < cart.Products.Count; item++)
                                 {
                                     ViewData["ProductNumber"] = item + 1;
                                     <partial name="./DisplayTemplates/_CartProduct" model="cart.Products[item]" view-data="ViewData" />
@@ -73,10 +73,12 @@
                     <!-- Cart Buttons -->
                     <div class="cart_buttons d-flex flex-row align-items-start justify-content-start">
                         <div class="cart_buttons_inner ml-sm-auto d-flex flex-row align-items-start justify-content-start flex-wrap">
-                            <div class="button button_clear trans_200">
-                                <a href="#">clear cart</a>
-                            </div>
-                            <div class="button button_continue trans_200"><a href="#">buy</a></div>
+                            <button class="button button_clear trans_200" id="button_clear_cart">
+                                clear cart
+                            </button>
+                            <button class="button button_continue trans_200">
+                                buy
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -90,4 +92,4 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-}
+    }

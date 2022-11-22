@@ -1,4 +1,4 @@
-﻿using InternetStore.Models;
+﻿using InternetStore.Infrastructure;
 
 namespace InternetStore
 {
