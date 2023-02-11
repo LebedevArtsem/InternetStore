@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using MongoDB.Driver;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using InternetStore.Infrastructure;
 
@@ -15,8 +14,6 @@ namespace InternetStore.Components
         public ProductQuantityViewComponent(IMongoDatabase database)
         {
             _carts = database.GetCollection<Cart>("Carts");
-
-
         }   
 
         public IViewComponentResult Invoke()

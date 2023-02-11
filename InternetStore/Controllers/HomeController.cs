@@ -1,7 +1,9 @@
-﻿using InternetStore.Domain;
+﻿using DnsClient.Internal;
+using InternetStore.Domain;
 using InternetStore.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,22 +17,24 @@ public class HomeController : Controller
 
     private readonly IMongoCollection<Category> _categories;
 
-    private readonly IMongoCollection<User> _users;
+    private readonly ILogger<HomeController> _logger;
 
-    public HomeController(IMongoDatabase mongoDatabase)
+    public string Message { get; set; }
+
+    public HomeController(IMongoDatabase mongoDatabase,ILogger<HomeController> logger)
     {
         _mongoDatabase = mongoDatabase;
+        _logger = logger;
         _products = _mongoDatabase.GetCollection<Product>("Products");
         _categories = _mongoDatabase.GetCollection<Category>("Categories");
-        _users = _mongoDatabase.GetCollection<User>("Users");
-
-        ViewData["LayoutCategories"] = _categories.Find(item => true).ToList();
     }
 
     [HttpGet]
     public async Task<IActionResult> Index()
     {
         ViewData["Products"] = await _products.Find(product => true).ToListAsync();
+
+        _logger.LogInformation("");
 
         return View();
     }

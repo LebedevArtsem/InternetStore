@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
 using FluentValidation.AspNetCore;
+using InternetStore.Infrastructure;
 
 namespace InternetStore;
 public class Startup
@@ -17,7 +18,6 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddDistributedMemoryCache();
         services.AddSession(options =>
         {
             options.Cookie.HttpOnly = true;
@@ -80,10 +80,6 @@ public class Startup
             endpoints.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}"
-                );
-            endpoints.MapControllerRoute(
-                name: "default",
-                pattern: "api/{controller=Home}/{id?}"
                 );
         });
     }
