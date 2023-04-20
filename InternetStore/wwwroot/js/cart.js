@@ -14,14 +14,17 @@ $(document).ready(function () {
     })
 });
 
-$(document).ready(function () {
-    $("#button_delete").click(function () {
-        $.ajax({
+$(document).on('click', function (event) {
+    var btn_id = event.target.id;
+    if (btn_id.split(' ')[0] == "button_delete") {
+        var product_id = btn_id.split(' ')[1]
+        var product_size = btn_id.split(' ')[2]
+        $.ajax(
+            console.log(product_id,product_size)
+            , {
+            
             type: "DELETE",
-            url: '/Cart/RemoveFromCart',
-            data: {
-                Id: $("#product_id").val()
-            },
+            url: `/Cart/RemoveFromCart/${product_id}/${product_size}`,
             success: function () {
                 window.location.reload()
             },
@@ -30,5 +33,6 @@ $(document).ready(function () {
                 alert("Error")
             }
         })
-    })
+    }
+
 });

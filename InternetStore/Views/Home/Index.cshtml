@@ -65,7 +65,11 @@
         </div>
         <div class="row load_more_row">
             <div class="col">
-                <div class="button load_more ml-auto mr-auto"><a href="#">load more</a></div>
+                <div class="button load_more ml-auto mr-auto">
+                    <a asp-action="Index"
+                           asp-controller="Home"
+                           asp-route-loadMore="1">load more</a>
+                </div>
             </div>
         </div>
     </div>

@@ -71,11 +71,16 @@ namespace InternetStore.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> RemoveFromCart(string id)
+        public async Task<IActionResult> RemoveFromCart([FromRoute]string id,[FromRoute]string paramert)
         {
+
+            if (id == null)
+            {
+                return (IActionResult)Results.BadRequest();
+            }
             var cart = GetCart();
 
-            cart.Products.RemoveAll(item => item.Id == id);
+            cart.Products.RemoveAll(item => item.Id == id && item.Size == paramert); // match id and size 
 
             await _carts.ReplaceOneAsync(item => item.Id == cart.Id, cart, new ReplaceOptions { IsUpsert = true });
 

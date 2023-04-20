@@ -81,15 +81,6 @@
                             title="@category.Title"
                             total-pages="@pagination.TotalPages"
                             current-page="@pagination.CurrentPage"/>
-                        @*@for (var i = 1; i <= pagination.TotalPages; i++)
-                        {
-                            <li><a 
-                                asp-action="Category" 
-                                asp-controller="Home" 
-                                asp-route-title="@category.Title"
-                                asp-route-page="@i">@i</a>
-                            </li>
-                        }*@
                     </ul>
                 </div>
             </div>

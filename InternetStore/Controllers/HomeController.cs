@@ -3,7 +3,7 @@ using InternetStore.Domain;
 using InternetStore.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using MongoDB.Driver;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,25 +16,23 @@ public class HomeController : Controller
     private readonly IMongoCollection<Product> _products;
 
     private readonly IMongoCollection<Category> _categories;
-
-    private readonly ILogger<HomeController> _logger;
+    private static int currentLoadMore = 1;
 
     public string Message { get; set; }
 
-    public HomeController(IMongoDatabase mongoDatabase,ILogger<HomeController> logger)
+    public HomeController(IMongoDatabase mongoDatabase)
     {
         _mongoDatabase = mongoDatabase;
-        _logger = logger;
         _products = _mongoDatabase.GetCollection<Product>("Products");
         _categories = _mongoDatabase.GetCollection<Category>("Categories");
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int loadMore = 0)
     {
-        ViewData["Products"] = await _products.Find(product => true).ToListAsync();
-
-        _logger.LogInformation("");
+        currentLoadMore += loadMore;
+        var a = await _products.Find(product => true).Limit(3*currentLoadMore).ToListAsync();
+        ViewData["Products"] = await _products.Find(product => true).Limit(9*currentLoadMore).ToListAsync();
 
         return View();
     }
